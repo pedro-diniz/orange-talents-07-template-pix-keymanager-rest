@@ -19,10 +19,14 @@ annotation class UUIDValido(
 class UUIDValidoValidator : ConstraintValidator<UUIDValido, String> {
 
     override fun isValid(
-        value: String,
+        value: String?,
         annotationMetadata: AnnotationValue<UUIDValido>,
         context: ConstraintValidatorContext
     ): Boolean {
+
+        if (value == null) {
+            return true
+        }
 
         try {
             val UUID = UUID.fromString(value)
