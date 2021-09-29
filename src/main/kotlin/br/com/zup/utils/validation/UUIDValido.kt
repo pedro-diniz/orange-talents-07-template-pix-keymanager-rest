@@ -8,7 +8,7 @@ import java.util.*
 import javax.validation.Constraint
 
 @MustBeDocumented
-@Target(AnnotationTarget.FIELD)
+@Target(AnnotationTarget.FIELD, AnnotationTarget.PROPERTY, AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [UUIDValidoValidator::class])
 annotation class UUIDValido(

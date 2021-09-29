@@ -2,7 +2,7 @@ package br.com.zup.controller
 
 import br.com.zup.controller.dto.response.ChavePixResponseRest
 import br.com.zup.controller.dto.request.ChavePixRequestRest
-import br.com.zup.controller.service.CadastraGrpcService
+import br.com.zup.service.CadastraGrpcService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post

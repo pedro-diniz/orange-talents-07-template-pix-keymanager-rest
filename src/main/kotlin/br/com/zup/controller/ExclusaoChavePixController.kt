@@ -1,7 +1,7 @@
 package br.com.zup.controller
 
 import br.com.zup.controller.dto.request.ExclusaoChavePixRequestRest
-import br.com.zup.controller.service.ExcluiGrpcService
+import br.com.zup.service.ExcluiGrpcService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Delete

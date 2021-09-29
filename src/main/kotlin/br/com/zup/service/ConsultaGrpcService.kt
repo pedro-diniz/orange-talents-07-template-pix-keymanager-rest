@@ -1,4 +1,4 @@
-package br.com.zup.controller.service
+package br.com.zup.service
 
 import br.com.zup.ConsultaChavePixRequest
 import br.com.zup.ConsultaChavePixServiceGrpc

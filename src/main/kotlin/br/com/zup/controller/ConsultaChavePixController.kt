@@ -1,7 +1,7 @@
 package br.com.zup.controller
 
 import br.com.zup.controller.dto.request.ConsultaChavePixRequestRest
-import br.com.zup.controller.service.ConsultaGrpcService
+import br.com.zup.service.ConsultaGrpcService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
