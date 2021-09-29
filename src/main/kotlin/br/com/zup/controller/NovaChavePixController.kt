@@ -1,6 +1,7 @@
 package br.com.zup.controller
 
 import br.com.zup.ChavePixResponse
+import br.com.zup.controller.dto.NovaChavePixResponse
 import br.com.zup.controller.dto.request.NovaChavePixRequest
 import br.com.zup.controller.service.CadastraGrpcService
 import io.micronaut.http.HttpResponse
@@ -10,6 +11,7 @@ import io.micronaut.http.uri.UriBuilder
 import io.micronaut.validation.Validated
 import jakarta.inject.Inject
 import org.slf4j.LoggerFactory
+import java.util.*
 import javax.validation.Valid
 
 @Validated @Controller
@@ -27,12 +29,15 @@ class NovaChavePixController(
 
         val response = service.cadastraGrpc(grpcRequest)
 
-        if (response.code() != 200) {
+        if (response.code() != 201) {
             return response
         }
         else {
+            val pixId = (response.body() as NovaChavePixResponse).pixId
+            println("pixId: $pixId")
             val uri = UriBuilder.of("/api/chaves/{pixId}")
-                .expand(mutableMapOf(Pair("pixId", (response.body() as ChavePixResponse).pixId)))
+                .expand(mutableMapOf(Pair("pixId", pixId)))
+            println("Uri: $uri")
 
             return HttpResponse.created(uri)
         }

@@ -2,6 +2,7 @@ package br.com.zup.controller.service
 
 import br.com.zup.ChavePixRequest
 import br.com.zup.DesafioPixServiceGrpc
+import br.com.zup.utils.extensions.toResponse
 import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import io.micronaut.http.HttpResponse
@@ -12,13 +13,13 @@ import jakarta.inject.Singleton
 
 @Validated @Singleton
 class CadastraGrpcService(
-    @Inject val grpcClient: DesafioPixServiceGrpc.DesafioPixServiceBlockingStub
+    @Inject val grpcServer: DesafioPixServiceGrpc.DesafioPixServiceBlockingStub
 ) {
 
     fun cadastraGrpc(request: ChavePixRequest) : HttpResponse<Any> {
 
         try {
-            return HttpResponse.ok(grpcClient.cadastra(request))
+            return HttpResponse.created(grpcServer.cadastra(request).toResponse())
         }
         catch (e: StatusRuntimeException) {
             val description = e.status.description
