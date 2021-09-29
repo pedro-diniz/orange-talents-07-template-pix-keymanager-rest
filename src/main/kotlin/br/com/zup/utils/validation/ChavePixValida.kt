@@ -2,7 +2,7 @@ package br.com.zup.pix
 
 import br.com.zup.TipoChave
 import br.com.zup.TipoConta
-import br.com.zup.controller.dto.request.NovaChavePixRequest
+import br.com.zup.controller.dto.request.ChavePixRequestRest
 import io.micronaut.core.annotation.AnnotationValue
 import io.micronaut.validation.validator.constraints.ConstraintValidator
 import io.micronaut.validation.validator.constraints.ConstraintValidatorContext
@@ -20,10 +20,10 @@ annotation class ChavePixValida(
 )
 
 @Singleton
-class ChavePixValidator : ConstraintValidator<ChavePixValida, NovaChavePixRequest> {
+class ChavePixValidator : ConstraintValidator<ChavePixValida, ChavePixRequestRest> {
 
     override fun isValid(
-        value: NovaChavePixRequest,
+        value: ChavePixRequestRest,
         annotationMetadata: AnnotationValue<ChavePixValida>,
         context: ConstraintValidatorContext
     ): Boolean {

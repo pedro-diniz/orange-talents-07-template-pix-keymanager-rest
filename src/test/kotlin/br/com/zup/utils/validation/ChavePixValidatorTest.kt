@@ -1,14 +1,12 @@
 package br.com.zup.utils.validation
 
-import br.com.zup.controller.dto.request.NovaChavePixRequest
+import br.com.zup.controller.dto.request.ChavePixRequestRest
 import org.junit.jupiter.api.Assertions.*
 import br.com.zup.TipoChave
 import br.com.zup.TipoConta
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.micronaut.validation.validator.Validator
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 @MicronautTest
 internal class ChavePixValidatorTest(
@@ -18,7 +16,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `deve passar na validacao do cpf`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.CPF,
             "07457547401",
@@ -32,7 +30,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `nao deve passar na validacao do cpf`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.CPF,
             "123456789",
@@ -46,7 +44,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `nao deve passar na validacao com cpf nulo`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.CPF,
             "",
@@ -60,7 +58,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `deve passar na validacao do email`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.EMAIL,
             "fulano@zup.com.br",
@@ -74,7 +72,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `nao deve passar na validacao do email`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.EMAIL,
             "fulano#zup.com.br",
@@ -88,7 +86,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `nao deve passar na validacao com email nulo`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.EMAIL,
             "",
@@ -102,7 +100,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `deve passar na validacao do telefone celular`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.TELEFONE_CELULAR,
             "+5584996327131",
@@ -116,7 +114,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `nao deve passar na validacao do telefone celular`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.TELEFONE_CELULAR,
             "+55(84)99632-7131",
@@ -130,7 +128,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `nao deve passar na validacao com telefone celular nulo`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.TELEFONE_CELULAR,
             "",
@@ -144,7 +142,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `nao deve passar na validacao da chave aleatoria`() {
 
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.CHAVE_ALEATORIA,
             "eu deveria ser vazia",
@@ -157,7 +155,7 @@ internal class ChavePixValidatorTest(
 
     @Test
     internal fun `nao deve passar com tipo chave unknown`() {
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac130002",
             TipoChave.TIPO_CHAVE_UNKNOWN,
             "eu deveria ser vazia",
@@ -170,7 +168,7 @@ internal class ChavePixValidatorTest(
 
     @Test
     internal fun `nao deve passar com tipo conta unknown nem com UUID invalido`() {
-        val novaChavePixDto = NovaChavePixRequest(
+        val novaChavePixDto = ChavePixRequestRest(
             "e56b7d32-1b23-11ec-9621-0242ac131111z",
             TipoChave.CPF,
             "12345678909",
