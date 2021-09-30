@@ -24,7 +24,7 @@ internal class GrpcClientFactoryTest(
 
     @Test
     fun exclusaoChaveClientStub() {
-        val stub = GrpcClientFactory().novaChaveClientStub(channel)
+        val stub = GrpcClientFactory().exclusaoChaveClientStub(channel)
 
         assertEquals("localhost:50051", stub!!.channel.authority())
         assertFalse(channel.isShutdown)
@@ -32,7 +32,7 @@ internal class GrpcClientFactoryTest(
 
     @Test
     fun consultaChaveClientStub() {
-        val stub = GrpcClientFactory().novaChaveClientStub(channel)
+        val stub = GrpcClientFactory().consultaChaveClientStub(channel)
 
         assertEquals("localhost:50051", stub!!.channel.authority())
         assertFalse(channel.isShutdown)
@@ -40,7 +40,7 @@ internal class GrpcClientFactoryTest(
 
     @Test
     fun listaChavesClientStub() {
-        val stub = GrpcClientFactory().novaChaveClientStub(channel)
+        val stub = GrpcClientFactory().listaChavesClientStub(channel)
 
         assertEquals("localhost:50051", stub!!.channel.authority())
         assertFalse(channel.isShutdown)

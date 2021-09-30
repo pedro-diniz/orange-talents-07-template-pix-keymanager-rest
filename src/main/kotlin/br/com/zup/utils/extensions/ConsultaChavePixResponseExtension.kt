@@ -1,26 +1,36 @@
 package br.com.zup.utils.extensions
 
 import br.com.zup.ConsultaChavePixResponse
-import br.com.zup.controller.dto.response.BankAccountResponseRest
-import br.com.zup.controller.dto.response.OwnerResponseRest
-import br.com.zup.controller.dto.response.PixKeyDetailResponseRest
+import br.com.zup.controller.dto.response.*
 import java.time.Instant
 import java.time.ZoneId
 
 fun ConsultaChavePixResponse.toResponse() : PixKeyDetailResponseRest {
+
+    var pixIdResponse : Long? = null
+    var clientIdResponse : String? = null
+
+    if (pixId != 0L) {
+        pixIdResponse = pixId
+    }
+    if (clientId.isNotBlank()) {
+        clientIdResponse = clientId
+    }
+
     return PixKeyDetailResponseRest(
+        pixId = pixIdResponse,
+        clientId = clientIdResponse,
         keyType = keyType,
         key = key,
-        bankAccount = BankAccountResponseRest(
-            participant = bankAccount.participant,
-            branch = bankAccount.branch,
-            accountNumber = bankAccount.accountNumber,
-            accountType = bankAccount.accountType
-        ),
-        owner = OwnerResponseRest(
-            type = owner.type,
-            name = owner.name,
-            taxIdNumber = owner.taxIdNumber
+        ContaResponseRest(
+            TitularResponseRest(
+                nome = conta.titular.nome,
+                cpf = conta.titular.cpf
+            ),
+            agencia = conta.agencia,
+            nomeInstituicao = conta.nomeInstituicao,
+            numeroConta = conta.numeroConta,
+            tipoConta = conta.tipoConta
         ),
         createdAt = Instant.ofEpochSecond(createdAt.seconds, createdAt.nanos.toLong()).atZone(ZoneId.of("UTC")).toLocalDateTime()
     )

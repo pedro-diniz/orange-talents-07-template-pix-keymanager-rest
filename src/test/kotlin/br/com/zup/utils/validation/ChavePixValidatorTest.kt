@@ -169,7 +169,7 @@ internal class ChavePixValidatorTest(
     @Test
     internal fun `nao deve passar com tipo conta unknown nem com UUID invalido`() {
         val novaChavePixDto = ChavePixRequestRest(
-            "e56b7d32-1b23-11ec-9621-0242ac131111z",
+            "ta errado aqui",
             TipoChave.CPF,
             "12345678909",
             TipoConta.TIPO_CONTA_UNKNOWN
@@ -182,6 +182,7 @@ internal class ChavePixValidatorTest(
             listaMensagensErro.add(erro.message)
         }
 
+        println(setErros.size)
         assertTrue(setErros.isNotEmpty())
         assertTrue(setErros.size == 2)
         assertTrue("UUID inválido" in listaMensagensErro)

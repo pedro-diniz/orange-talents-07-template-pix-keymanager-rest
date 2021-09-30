@@ -3,6 +3,7 @@ package br.com.zup.controller.service
 import br.com.zup.ItemChavePixResponse
 import br.com.zup.ListagemChavesPixResponse
 import br.com.zup.ListagemChavesPixServiceGrpc
+import br.com.zup.controller.dto.response.ItemChavePixResponseRest
 import br.com.zup.utils.GrpcClientFactory
 import com.google.protobuf.Timestamp
 import io.grpc.Status
@@ -60,14 +61,14 @@ internal class ListagemGrpcServiceTest{
         Mockito.`when`(grpcServerMock.listaChaves(Mockito.any())).thenReturn(listaGrpc.build())
 
         val httpRequest : HttpRequest<String> = HttpRequest.GET("/api/chaves/$clientId")
-        val httpResponse : HttpResponse<Any> = client.toBlocking().exchange(httpRequest)
+        val httpResponse = client.toBlocking().exchange(httpRequest, Any::class.java) // faz o retorno funcionar
 
         Mockito.verify(grpcServerMock, Mockito.atLeastOnce()).listaChaves(Mockito.any())
         Mockito.reset(grpcServerMock)
 
-        println(httpResponse.body())
         with(httpResponse) {
             assertEquals(200, code())
+            assertEquals(2, (httpResponse.body() as List<ItemChavePixResponseRest>).size)
         }
     }
 

@@ -1,9 +1,6 @@
 package br.com.zup.controller.service
 
-import br.com.zup.BankAccount
-import br.com.zup.ConsultaChavePixResponse
-import br.com.zup.ConsultaChavePixServiceGrpc
-import br.com.zup.Owner
+import br.com.zup.*
 import br.com.zup.controller.dto.request.ConsultaChavePixRequestRest
 import br.com.zup.controller.dto.request.ExclusaoChavePixRequestRest
 import br.com.zup.utils.GrpcClientFactory
@@ -44,24 +41,29 @@ internal class ConsultaGrpcServiceTest {
         )
 
         val grpcResponse = ConsultaChavePixResponse.newBuilder()
+            .setPixId(1L)
+            .setClientId("c56dfef4-7901-44fb-84e2-a2cefb157890")
             .setKeyType("CPF")
             .setKey("07457547401")
-            .setBankAccount(BankAccount.newBuilder()
-                .setParticipant("60701190")
-                .setBranch("0001")
-                .setAccountNumber("123456")
-                .setAccountType("SVGS"))
-            .setOwner(Owner.newBuilder()
-                .setType("NATURAL_PERSON")
-                .setName("Pedro Diniz")
-                .setTaxIdNumber("07457547401"))
+            .setConta(
+                Conta.newBuilder()
+                    .setTitular(
+                        Titular.newBuilder()
+                            .setNome("Pedro Diniz")
+                            .setCpf("07457547401")
+                    )
+                    .setNomeInstituicao("ITAÚ UNIBANCO S.A.")
+                    .setAgencia("0001")
+                    .setNumeroConta("123456")
+                    .setTipoConta("SVGS")
+            )
             .setCreatedAt(Timestamp.newBuilder().setSeconds(9999999).setNanos(999999))
             .build()
 
         Mockito.`when`(grpcServerMock.consultaChave(Mockito.any())).thenReturn(grpcResponse)
 
         val httpRequest = HttpRequest.POST("/api/chaves/consulta", request)
-        val httpResponse : HttpResponse<Any> = client.toBlocking().exchange(httpRequest)
+        val httpResponse: HttpResponse<Any> = client.toBlocking().exchange(httpRequest)
 
         Mockito.verify(grpcServerMock, Mockito.atLeastOnce()).consultaChave(Mockito.any())
         Mockito.reset(grpcServerMock)
@@ -80,7 +82,8 @@ internal class ConsultaGrpcServiceTest {
             chavePix = null
         )
 
-        Mockito.`when`(grpcServerMock.consultaChave(Mockito.any())).thenThrow(StatusRuntimeException(Status.PERMISSION_DENIED))
+        Mockito.`when`(grpcServerMock.consultaChave(Mockito.any()))
+            .thenThrow(StatusRuntimeException(Status.PERMISSION_DENIED))
 
         val httpRequest = HttpRequest.POST("/api/chaves/consulta", request)
         val error = org.junit.jupiter.api.assertThrows<HttpClientResponseException> {
@@ -128,7 +131,8 @@ internal class ConsultaGrpcServiceTest {
             chavePix = "07457547401"
         )
 
-        Mockito.`when`(grpcServerMock.consultaChave(Mockito.any())).thenThrow(StatusRuntimeException(Status.UNAVAILABLE))
+        Mockito.`when`(grpcServerMock.consultaChave(Mockito.any()))
+            .thenThrow(StatusRuntimeException(Status.UNAVAILABLE))
 
         val httpRequest = HttpRequest.POST("/api/chaves/consulta", request)
         val error = org.junit.jupiter.api.assertThrows<HttpClientResponseException> {
@@ -151,7 +155,8 @@ internal class ConsultaGrpcServiceTest {
             chavePix = null
         )
 
-        Mockito.`when`(grpcServerMock.consultaChave(Mockito.any())).thenThrow(StatusRuntimeException(Status.INVALID_ARGUMENT))
+        Mockito.`when`(grpcServerMock.consultaChave(Mockito.any()))
+            .thenThrow(StatusRuntimeException(Status.INVALID_ARGUMENT))
 
         val httpRequest = HttpRequest.POST("/api/chaves/consulta", request)
         val error = org.junit.jupiter.api.assertThrows<HttpClientResponseException> {

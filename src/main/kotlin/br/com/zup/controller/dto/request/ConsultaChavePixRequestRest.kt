@@ -8,7 +8,7 @@ import javax.validation.constraints.Positive
 @Introspected
 data class ConsultaChavePixRequestRest(
     @field:Positive val pixId: Long?,
-    @UUIDValido val clientId: String?,
+    @field:UUIDValido val clientId: String?,
     val chavePix: String?
 ) {
 
